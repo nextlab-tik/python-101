@@ -1,0 +1,26 @@
+Bienveue chez mtcfss
+welcome to mtcfss Start with Python !
+
+Pourquoi python
+- avantage python :
+	*facile ( lire , ecrire , aprendre )
+	*portable(multi system)
+	*languge script
+	*oriente objet
+-historique
+	*premiere version python est sortie en 1991 cree par guido van Rossum
+	*2001 Python Software fondation
+-version 
+	* Python 2.6 legacy
+	* Python 3.5, stable, documentation released on 27 June 2016. version stable et documenté
+	* Python 3.6 beta is now available!
+	* python 3.7 developer version 
+-que peutont faire avec python 
+	*Script (petit program on une tache bien determiner )
+	*program complet ( jeux)
+	*projet complexce (ensemble de logiciel) 
+	*interface graphique (with glade)
+	*base donner (django)
+	*network ....
+- python languge interpreter vs c languge compiler 
+l interpretation assure la portabilite du python 
