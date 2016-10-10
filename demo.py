@@ -1,9 +1,31 @@
-##################################################################################################
+# <demo> -------------------------------- stop --------------------------------
+
 """
 Hello **MTCFSS** members to the `MTCFSS Start with Python` course!
 let's enjoy coding!
-
-`TODO add logo of python`_
+::
+                               [1;34m.iiiiiiiiii.[m
+                             [1;34m.ii``iiiiiiiiii.[m
+                             [1;34miii..iiiiiiiiiii[m
+                             [1;34m````````iiiiiiii[m
+                     [1;34m.iiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiii,[m
+                  [1;34m.iiiiiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiiiii.[m
+                  [1;34miiiiiiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiiiiii[m
+                  [1;34miiiiiiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiiiiii[m
+                  [1;34miiiiiiiiii[m [1;33m,,,,,,,,,,,,,,,,,iiiiiiiiii[m
+                  [1;34miiiiiiiiii[m [1;33miiiiiiiiiiiiiiiiiiiiiiiiiii[m
+                  [1;34m`iiiiiiiii[m [1;33miiiiiiiiiiiiiiiiiiiiiiiiii`[m
+                     [1;34m`iiiiii[m [1;33miiiiiiiiiiiiiiiiiiiiiii`[m
+                             [1;33miiiiiiii,,,,,,,,[m
+                             [1;33miiiiiiiiiii``iii[m
+                             [1;33m`iiiiiiiiii..ii`[m
+                               [1;33m`iiiiiiiiii`[m
+                     ____        _   _
+                    |  _ \ _   _| |_| |__   ___  _ __
+                    | |_) | | | | __| '_ \ / _ \| '_ \
+                    |  __/| |_| | |_| | | | (_) | | | |
+                    |_|    \__, |\__|_| |_|\___/|_| |_|
+                           |___/
 """
 
 # <demo> -------------------------------- stop --------------------------------
@@ -372,7 +394,7 @@ Python Philosophies
 ~~~~~~~~~~~~~~~~~~~
 """
 
-import this
+éimport this
 
 # <demo> -------------------------------- stop --------------------------------
 
@@ -417,6 +439,28 @@ s = "a" + " " + "simple" + " " + "example" + " " + "."
 # :Good:
 
 s = ' '.join(["a", "simple", "example", "."])
+
+# <demo> -------------------------------- stop --------------------------------
+"""
+LIST
+===
+"""
+list = ["ali","sami","rami","xxx"]
+list
+print(list[0])
+print(list[-1])
+list + ["hela","fatma"]
+list
+i=0
+for s in list:
+    print(i,s)
+    i+=1
+print(len(list))
+list.append("fatma")
+print(len(list))
+list.append("hela")
+print(len(list), list[-1])
+
 
 # <demo> -------------------------------- stop --------------------------------
 # LIST & STRING
