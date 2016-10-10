@@ -1,42 +1,243 @@
 #!/bin/env python3
+"""Module for interactive demos using IPython.
+
+This module implements a few classes for running Python scripts interactively
+in IPython for demonstrations.  With very simple markup (a few tags in
+comments), you can control points where the script stops executing and returns
+control to IPython.
+
+
+Provided classes
+----------------
+
+The classes are (see their docstrings for further details):
+
+ - Demo: pure python demos
+
+ - IPythonDemo: demos with input to be processed by IPython as if it had been
+   typed interactively (so magics work, as well as any other special syntax you
+   may have added via input prefilters).
+
+ - LineDemo: single-line version of the Demo class.  These demos are executed
+   one line at a time, and require no markup.
+
+ - IPythonLineDemo: IPython version of the LineDemo class (the demo is
+   executed a line at a time, but processed via IPython).
+
+ - ClearMixin: mixin to make Demo classes with less visual clutter.  It
+   declares an empty marquee and a pre_cmd that clears the screen before each
+   block (see Subclassing below).
+
+ - ClearDemo, ClearIPDemo: mixin-enabled versions of the Demo and IPythonDemo
+   classes.
+
+Inheritance diagram:
+
+.. inheritance-diagram:: IPython.lib.demo
+   :parts: 3
+
+Subclassing
+-----------
+
+The classes here all include a few methods meant to make customization by
+subclassing more convenient.  Their docstrings below have some more details:
+
+  - marquee(): generates a marquee to provide visible on-screen markers at each
+    block start and end.
+
+  - pre_cmd(): run right before the execution of each block.
+
+  - post_cmd(): run right after the execution of each block.  If the block
+    raises an exception, this is NOT called.
+
+
+Operation
+---------
+
+The file is run in its own empty namespace (though you can pass it a string of
+arguments as if in a command line environment, and it will see those as
+sys.argv).  But at each stop, the global IPython namespace is updated with the
+current internal demo namespace, so you can work interactively with the data
+accumulated so far.
+
+By default, each block of code is printed (with syntax highlighting) before
+executing it and you have to confirm execution.  This is intended to show the
+code to an audience first so you can discuss it, and only proceed with
+execution once you agree.  There are a few tags which allow you to modify this
+behavior.
+
+The supported tags are:
+
+# <demo> stop
+
+  Defines block boundaries, the points where IPython stops execution of the
+  file and returns to the interactive prompt.
+
+  You can optionally mark the stop tag with extra dashes before and after the
+  word 'stop', to help visually distinguish the blocks in a text editor:
+
+  # <demo> --- stop ---
+
+
+# <demo> silent
+
+  Make a block execute silently (and hence automatically).  Typically used in
+  cases where you have some boilerplate or initialization code which you need
+  executed but do not want to be seen in the demo.
+
+# <demo> auto
+
+  Make a block execute automatically, but still being printed.  Useful for
+  simple code which does not warrant discussion, since it avoids the extra
+  manual confirmation.
+
+# <demo> auto_all
+
+  This tag can _only_ be in the first block, and if given it overrides the
+  individual auto tags to make the whole demo fully automatic (no block asks
+  for confirmation).  It can also be given at creation time (or the attribute
+  set later) to override what's in the file.
+
+While _any_ python file can be run as a Demo instance, if there are no stop
+tags the whole file will run in a single block (no different that calling
+first %pycat and then %run).  The minimal markup to make this useful is to
+place a set of stop tags; the other tags are only there to let you fine-tune
+the execution.
+
+This is probably best explained with the simple example file below.  You can
+copy this into a file named ex_demo.py, and try running it via::
+
+    from IPython.demo import Demo
+    d = Demo('ex_demo.py')
+    d()
+
+Each time you call the demo object, it runs the next block.  The demo object
+has a few useful methods for navigation, like again(), edit(), jump(), seek()
+and back().  It can be reset for a new run via reset() or reloaded from disk
+(in case you've edited the source) via reload().  See their docstrings below.
+
+Note: To make this simpler to explore, a file called "demo-exercizer.py" has
+been added to the "docs/examples/core" directory.  Just cd to this directory in
+an IPython session, and type::
+
+  %run demo-exercizer.py
+
+and then follow the directions.
+
+Example
+-------
+
+The following is a very simple example of a valid demo file.
+
+::
+
+    #################### EXAMPLE DEMO <ex_demo.py> ###############################
+    '''A simple interactive demo to illustrate the use of IPython's Demo class.'''
+
+    print 'Hello, welcome to an interactive IPython demo.'
+
+    # The mark below defines a block boundary, which is a point where IPython will
+    # stop execution and return to the interactive prompt. The dashes are actually
+    # optional and used only as a visual aid to clearly separate blocks while
+    # editing the demo code.
+    # <demo> stop
+
+    x = 1
+    y = 2
+
+    # <demo> stop
+
+    # the mark below makes this block as silent
+    # <demo> silent
+
+    print 'This is a silent block, which gets executed but not printed.'
+
+    # <demo> stop
+    # <demo> auto
+    print 'This is an automatic block.'
+    print 'It is executed without asking for confirmation, but printed.'
+    z = x+y
+
+    print 'z=',x
+
+    # <demo> stop
+    # This is just another normal block.
+    print 'z is now:', z
+
+    print 'bye!'
+    ################### END EXAMPLE DEMO <ex_demo.py> ############################
+"""
+
+from __future__ import unicode_literals
+
+#*****************************************************************************
+#     Copyright (C) 2005-2006 Fernando Perez. <Fernando.Perez@colorado.edu>
+#
+#  Distributed under the terms of the BSD License.  The full license is in
+#  the file COPYING, distributed as part of this software.
+#
+#*****************************************************************************
 from __future__ import print_function
 
 import os
 import re
 import shlex
 import sys
-
 import pygments
-
+from IPython.utils import io
 from IPython.utils.text import marquee
 from IPython.utils import openpy
 from IPython.utils import py3compat
+__all__ = ['Demo','IPythonDemo','LineDemo','IPythonLineDemo','DemoError']
 
-__all__ = ['Demo', 'LineDemo', 'DemoError']
-
-class DemoError(Exception):
-    pass
+class DemoError(Exception): pass
 
 def re_mark(mark):
-    return re.compile(r'^\s*#\s+<demo>\s+%s\s*$' % mark, re.MULTILINE)
+    return re.compile(r'^\s*#\s+<demo>\s+%s\s*$' % mark,re.MULTILINE)
 
 class Demo(object):
 
-    re_stop = re_mark('-*\s?stop\s?-*')
-    re_silent = re_mark('silent')
-    re_auto = re_mark('auto')
+    re_stop     = re_mark('-*\s?stop\s?-*')
+    re_silent   = re_mark('silent')
+    re_auto     = re_mark('auto')
     re_auto_all = re_mark('auto_all')
 
-    def __init__(self, src, title='', arg_str='', auto_all=None):
+    def __init__(self,src,title='',arg_str='',auto_all=None):
+        """Make a new demo object.  To run the demo, simply call the object.
+
+        See the module docstring for full details and an example (you can use
+        IPython.Demo? in IPython to see it).
+
+        Inputs:
+
+          - src is either a file, or file-like object, or a
+              string that can be resolved to a filename.
+
+        Optional inputs:
+
+          - title: a string to use as the demo name.  Of most use when the demo
+            you are making comes from an object that has no filename, or if you
+            want an alternate denotation distinct from the filename.
+
+          - arg_str(''): a string of arguments, internally converted to a list
+            just like sys.argv, so the demo script can see a similar
+            environment.
+
+          - auto_all(None): global flag to run all blocks automatically without
+            confirmation.  This attribute overrides the block-level tags and
+            applies to the whole demo.  It is an attribute of the object, and
+            can be changed at runtime simply by reassigning it to a boolean
+            value.
+          """
         if hasattr(src, "read"):
-            # It seems to be a file or a file-like object
+             # It seems to be a file or a file-like object
             self.fname = "from a file-like object"
             if title == '':
                 self.title = "from a file-like object"
             else:
                 self.title = title
         else:
-            # Assume it's a string or something that can be converted to one
+             # Assume it's a string or something that can be converted to one
             self.fname = src
             if title == '':
                 (filepath, filename) = os.path.split(src)
@@ -56,6 +257,10 @@ class Demo(object):
         self.rst_lexer = pygments.lexers.get_lexer_by_name("rst")
         self.python_lexer = pygments.lexers.get_lexer_by_name("py3")
 
+        # get a few things from ipython.  While it's a bit ugly design-wise,
+        # it ensures that things like color scheme and the like are always in
+        # sync with the ipython mode being used.  This class is only meant to
+        # be used inside ipython anyways,  so it's OK.
         if self.inside_ipython:
             ip = get_ipython()
             self.ip_ns = ip.user_ns
@@ -63,6 +268,7 @@ class Demo(object):
             self.ip_run_cell = ip.run_cell
             self.shell = ip
 
+        # load user data and initialize data structures
         self.reload()
 
     def highlight(self, block):
@@ -93,6 +299,7 @@ class Demo(object):
             self.fobj = openpy.open(self.fname)
 
     def reload(self):
+        """Reload source from disk and initialize state."""
         self.fload()
 
         self.src = "".join(openpy.strip_encoding_cookie(self.fobj))
@@ -128,6 +335,7 @@ class Demo(object):
         self.reset()
 
     def reset(self):
+        """Reset the namespace and seek pointer to restart the demo"""
         self.user_ns = {}
         self.finished = False
         self.block_index = 0
@@ -137,6 +345,10 @@ class Demo(object):
             raise ValueError('invalid block index %s' % index)
 
     def _get_index(self, index):
+        """Get the current block index, validating and checking status.
+
+        Returns None if the demo is finished"""
+
         if index is None:
             if self.finished:
                 print('Demo finished.  Use <demo_name>.reset() if you want to rerun it.')
@@ -147,6 +359,10 @@ class Demo(object):
         return index
 
     def seek(self, index):
+        """Move the current seek pointer to the given block.
+
+        You can use negative indices to seek from the end, with identical
+        semantics to those of Python lists."""
         if index < 0:
             index = self.nblocks + index
         self._validate_index(index)
@@ -154,16 +370,30 @@ class Demo(object):
         self.finished = False
 
     def back(self, num=1):
+        """Move the seek pointer back num blocks (default is 1)."""
         self.seek(self.block_index - num)
 
     def jump(self, num=1):
+        """Jump a given number of blocks relative to the current one.
+
+        The offset can be positive or negative, defaults to 1."""
         self.seek(self.block_index + num)
 
     def again(self):
+        """Move the seek pointer back one block and re-execute."""
         self.back(1)
         self()
 
     def edit(self, index=None):
+        """Edit a block.
+
+        If no number is given, use the last block executed.
+
+        This edits the in-memory copy of the demo, it does NOT modify the
+        original source file.  If you want to do that, simply open the file in
+        an editor and use reload() when you make changes to the file.  This
+        method is meant to let you change a block during a demonstration for
+        explanatory purposes, without damaging your original script."""
 
         index = self._get_index(index)
         if index is None:
@@ -185,6 +415,7 @@ class Demo(object):
         self()
 
     def show(self, index=None):
+        """Show a single block on screen"""
 
         index = self._get_index(index)
         if index is None:
@@ -196,6 +427,7 @@ class Demo(object):
         sys.stdout.flush()
 
     def show_all(self):
+        """Show entire demo on screen, block by block"""
 
         fname = self.title
         title = self.title
@@ -213,10 +445,18 @@ class Demo(object):
         sys.stdout.flush()
 
     def run_cell(self, source):
+        """Execute a string with one or more lines of code"""
 
         exec(source, self.user_ns)
 
     def __call__(self, index=None):
+        """run a block of the demo.
+
+        If index is given, it should be an integer >=1 and <= nblocks.  This
+        means that the calling convention is one off from typical Python
+        lists.  The reason for the inconsistency is that the demo always
+        prints 'Block n/N, and N is the total, so it would be very odd to use
+        zero-indexing here."""
 
         index = self._get_index(index)
         if index is None:
@@ -258,18 +498,24 @@ class Demo(object):
         if self.block_index == self.nblocks:
             mq1 = self.marquee('END OF DEMO')
             if mq1:
+                # avoid spurious print if empty marquees are used
                 print()
                 print(mq1)
                 print(self.marquee('Use <demo_name>.reset() if you want to rerun it.'))
             self.finished = True
 
+    # These methods are meant to be overridden by subclasses who may wish to
+    # customize the behavior of of their demos.
     def marquee(self, txt='', width=78, mark='*'):
+        """Return the input string centered in a 'marquee'."""
         return marquee(txt, width, mark)
 
     def pre_cmd(self):
+        """Method called before executing each block."""
         pass
 
     def post_cmd(self):
+        """Method called after executing each block."""
         pass
 
 class LineDemo(Demo):
