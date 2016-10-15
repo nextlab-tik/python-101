@@ -3,29 +3,29 @@
 """
 Hello **MTCFSS** members to the `MTCFSS Start with Python` course!
 let's enjoy coding!
-::
-                               [1;34m.iiiiiiiiii.[m
-                             [1;34m.ii``iiiiiiiiii.[m
-                             [1;34miii..iiiiiiiiiii[m
-                             [1;34m````````iiiiiiii[m
-                     [1;34m.iiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiii,[m
-                  [1;34m.iiiiiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiiiii.[m
-                  [1;34miiiiiiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiiiiii[m
-                  [1;34miiiiiiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiiiiii[m
-                  [1;34miiiiiiiiii[m [1;33m,,,,,,,,,,,,,,,,,iiiiiiiiii[m
-                  [1;34miiiiiiiiii[m [1;33miiiiiiiiiiiiiiiiiiiiiiiiiii[m
-                  [1;34m`iiiiiiiii[m [1;33miiiiiiiiiiiiiiiiiiiiiiiiii`[m
-                     [1;34m`iiiiii[m [1;33miiiiiiiiiiiiiiiiiiiiiii`[m
-                             [1;33miiiiiiii,,,,,,,,[m
-                             [1;33miiiiiiiiiii``iii[m
-                             [1;33m`iiiiiiiiii..ii`[m
-                               [1;33m`iiiiiiiiii`[m
-                     ____        _   _
-                    |  _ \ _   _| |_| |__   ___  _ __
-                    | |_) | | | | __| '_ \ / _ \| '_ \
-                    |  __/| |_| | |_| | | | (_) | | | |
-                    |_|    \__, |\__|_| |_|\___/|_| |_|
-                           |___/
+.. raw:
+                              [1;34m.iiiiiiiiii.[m
+                            [1;34m.ii``iiiiiiiiii.[m
+                            [1;34miii..iiiiiiiiiii[m
+                            [1;34m````````iiiiiiii[m
+                    [1;34m.iiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiii,[m
+                 [1;34m.iiiiiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiiiii.[m
+                 [1;34miiiiiiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiiiiii[m
+                 [1;34miiiiiiiiiiiiiiiiiiiiiiiiiii[m [1;33miiiiiiiiii[m
+                 [1;34miiiiiiiiii[m [1;33m,,,,,,,,,,,,,,,,,iiiiiiiiii[m
+                 [1;34miiiiiiiiii[m [1;33miiiiiiiiiiiiiiiiiiiiiiiiiii[m
+                 [1;34m`iiiiiiiii[m [1;33miiiiiiiiiiiiiiiiiiiiiiiiii`[m
+                    [1;34m`iiiiii[m [1;33miiiiiiiiiiiiiiiiiiiiiii`[m
+                            [1;33miiiiiiii,,,,,,,,[m
+                            [1;33miiiiiiiiiii``iii[m
+                            [1;33m`iiiiiiiiii..ii`[m
+                              [1;33m`iiiiiiiiii`[m
+                    ____        _   _
+                   |  _ \ _   _| |_| |__   ___  _ __
+                   | |_) | | | | __| '_ \ / _ \| '_ \
+                   |  __/| |_| | |_| | | | (_) | | | |
+                   |_|    \__, |\__|_| |_|\___/|_| |_|
+                          |___/
 """
 
 # <demo> -------------------------------- stop --------------------------------
@@ -62,7 +62,8 @@ Builtin types
 
 
 :NOTE 1: Python is a non-typed language (variables are declared without specifying the type)
-:NOTE 2: There is not `;` in Python
+:NOTE 2: There is not `;` deliminator in Python
+:Note 3: Python is case-sensitive
 """
 
 # :Example:
@@ -208,6 +209,8 @@ x = 'Hello!'  ' '  'World!'
 print(x)
 
 x = x + '!'
+
+# :Warning:
 
 x = '1' + 1
 
