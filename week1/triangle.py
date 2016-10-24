@@ -14,6 +14,7 @@
 *********
 """
 
+
 def triangle(hauteur):
     largeur = (hauteur * 2) - 1
     for l in range(1, largeur + 1, 2):

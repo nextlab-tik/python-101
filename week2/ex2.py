@@ -13,4 +13,3 @@ window.add(but)
 
 window.show_all()
 Gtk.main()
-

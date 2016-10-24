@@ -2,7 +2,9 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+
 class MyWindow(Gtk.Window):
+
     def __init__(self):
         Gtk.Window.__init__(self, title="window class")
 
@@ -11,7 +13,6 @@ class MyWindow(Gtk.Window):
 
         # ajouter le container à window
         self.add(self.box)
-
 
         self.salutBut = Gtk.Button(label="salut")
         self.salutBut.connect("clicked", self.salut)
@@ -28,9 +29,6 @@ class MyWindow(Gtk.Window):
 
     def bye(self, widget):
         print("bye!")
-
-
-
 
 
 window = MyWindow()

@@ -553,8 +553,12 @@ Pass
 
 while True:
     pass
+
+
 class test:
     pass
+
+
 def fn():
     pass
 
@@ -565,9 +569,11 @@ Function (1/3)
 ==============
 """
 
+
 def hi():
     print("hello mtcfss")
 hi()
+
 
 def salut(name):
     print("Hello", name)
@@ -591,6 +597,7 @@ def hi(name="firas"):
 hi()
 hi("sahar")
 
+
 def hii(num, name="firas"):
     print(num, name)
 
@@ -605,6 +612,7 @@ Function (3/3)
 
 Positional Arg vs. Keyword Arg
 """
+
 
 def hi(nom, prenom):
     print("Hi", nom, prenom)
@@ -627,6 +635,7 @@ Lambda (Functional programming)
 
 f = lambda x: x ** 2
 print(f(5))
+
 
 def execute(f, x):
     print(f(x))
@@ -691,10 +700,12 @@ Class
 =====
 """
 
+
 class Demo1:
     pass
 
 d = Demo1()
+
 
 class Demo2:
 
@@ -702,6 +713,7 @@ class Demo2:
         print("new Demo")
 
 d = Demo2()
+
 
 class Demo3(Demo2):
 
@@ -751,42 +763,6 @@ print(d["nom"])
 d["age"] = 80
 len(d)
 "nom" in d
-
-# <demo> -------------------------------- stop --------------------------------
-
-# STRING
-# BUILTIN FUNCTION (sum, reversed, sorted, ...)
-# TYPES (dict, tuple, set, ...)
-# GENERATOR & Comprehensions & PACKING & UNPACKING
-# STANDARD FUNCTIONS (os, sys, datetime, re, math, timeit, json, ...)
-# LAMBDA
-# docstring
-# unittest
-# CLASS
-# coding style
-# exception
-
-
-# <demo> -------------------------------- stop --------------------------------
-# LIST & STRING
-# FOR
-# WHILE & break, continue & pass
-# BUILTIN FUNCTION (sum, reversed, sorted, ...)
-# TYPES (dict, tuple, set, ...)
-# FUNCTIONS & ARGS & KEYWORD ARGS
-# GENERATOR & Comprehensions & PACKING & UNPACKING
-# STANDARD FUNCTIONS (os, sys, datetime, re, math, timeit, json, ...)
-# LAMBDA
-# docstring
-# unittest
-# CLASS
-# coding style
-# exception
-# <demo> -------------------------------- stop --------------------------------
-
-# EXERCISE
-
-# TODO: check hacker rank
 
 # <demo> -------------------------------- stop --------------------------------
 

@@ -17,4 +17,3 @@ but.connect("clicked", on_clik)
 window.add(but)
 window.show_all()
 Gtk.main()
-

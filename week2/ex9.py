@@ -5,6 +5,7 @@ from gi.repository import Gtk
 
 
 class MyWindow(Gtk.Window):
+
     def __init__(self):
         Gtk.Window.__init__(self, title="List Box")
 
@@ -52,9 +53,7 @@ class MyWindow(Gtk.Window):
         listbox.add(row3)
 
 
-
 window = MyWindow()
 window.connect('delete-event', Gtk.main_quit)
 window.show_all()
 Gtk.main()
-

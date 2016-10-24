@@ -2,6 +2,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+
 class GridWindow(Gtk.Window):
 
     def __init__(self):
@@ -25,8 +26,9 @@ class GridWindow(Gtk.Window):
         # seule ligne et largeur de 2 colonnes
         grid.attach(button2, left=1, top=0, width=2, height=1)
 
-        # ajoute button 3 à dessous du button 1 avec hauteur de 1 et largeur de 2
-        grid.attach_next_to(button3, sibling=button1, side=Gtk.PositionType.BOTTOM, width=1, height=2)
+        # ajoute button3 à dessous du button1 avec hauteur de 1 et largeur de 2
+        grid.attach_next_to(
+            button3, sibling=button1, side=Gtk.PositionType.BOTTOM, width=1, height=2)
 
         grid.attach_next_to(button4, button3, Gtk.PositionType.RIGHT, 2, 1)
 
