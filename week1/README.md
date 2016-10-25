@@ -1,5 +1,5 @@
-Python 101 Introdcution - Week 1
-================================
+Python 101 Introdcution - Syntax Overview
+=========================================
 
 Python code snippets used on week 1 of the training (Python Syntax
 introduction).
