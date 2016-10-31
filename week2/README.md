@@ -10,3 +10,5 @@ Python code snippets used on week 2 (Python Desktop App deve with Gtk+ 3).
   Reference](https://lazka.github.io/pgi-docs/)
 - [Gtk+ 3 Official C Reference
   Manual](https://developer.gnome.org/gtk3/stable/)
+- [Pango Markup Language
+  Format](https://developer.gnome.org/pango/stable/PangoMarkupFormat.html)
