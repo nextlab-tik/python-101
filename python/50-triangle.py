@@ -16,7 +16,11 @@
 
 
 def triangle(hauteur):
-    largeur = (hauteur * 2) - 1
-    for l in range(1, largeur + 1, 2):
-        etoiles = '*' * l
-        print(etoiles.center(largeur))
+    base = (hauteur * 2) - 1
+    for l in range(hauteur):
+        etoiles = '*' * (l * 2 + 1)
+        print(etoiles.center(base))
+
+
+triangle(3)
+triangle(5)

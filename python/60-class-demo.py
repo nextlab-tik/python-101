@@ -1,24 +1,31 @@
+# Class
 class Person:
 
     # constructor
     def __init__(self, nom, prenom):
-        # self is `this` equvalent on python
+        # self is `this` alternative on python
         self.nom = nom
         self.prenom = prenom
+
+    def hi(self):
+        print("hi", self.name)
 
     def whoami(self):
         print("I'm", self.nom, self.prenom)
 
-    # toString() on python
+    # replace toString() on Java
     def __str__(self):
         return "{} {}".format(self.nom, self.prenom)
 
-p = Person("Firas", "Chaaben")
 
-print("Created person:", p)
-p.whoami()
+firas = Person("Firas", "Chaaben")
+
+firas.hi()
+firas.whoami()
+print(firas)
 
 
+# Subclass
 class Employee(Person):
 
     def __init__(self, nom, prenom, job):

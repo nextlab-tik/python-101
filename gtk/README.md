@@ -1,8 +1,6 @@
 Python 101 Introduction - Desktop App dev with Gtk+ 3
 =====================================================
 
-Python code snippets used on week 2 (Python Desktop App deve with Gtk+ 3).
-
 **Links:**
 
 - [The Python Gtk+ 3 Tutorial](http://python-gtk-3-tutorial.readthedocs.io/)

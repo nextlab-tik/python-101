@@ -1,9 +1,6 @@
 Python 101 Introdcution - Syntax Overview
 =========================================
 
-Python code snippets used on week 1 of the training (Python Syntax
-introduction).
-
 **Links:**
 
 - [Open Class Room Python
