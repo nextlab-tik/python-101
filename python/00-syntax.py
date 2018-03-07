@@ -1,7 +1,7 @@
 # <demo> -------------------------------- stop --------------------------------
 
 """
-Hello **MTCFSS** members to the `MTCFSS Start with Python` course!
+Hello `Python` course!
 let's enjoy coding!
 .. raw:
                               [1;34m.iiiiiiiiii.[m
@@ -571,7 +571,7 @@ Function (1/3)
 
 
 def hi():
-    print("hello mtcfss")
+    print("hello python")
 hi()
 
 

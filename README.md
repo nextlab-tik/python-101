@@ -43,4 +43,4 @@ These materials and code snippets are licensed under the
 
 Copyright © 2016-2018, [Moez Bouhlel](https://lejenome.github.io/)
 (<bmoez.j@gmail.com>) & [Firas Chaaben](https://lejenome.github.io/)
-(<firchatn@tik.tn), [Tik.tn](https://tik.tn).
+(<firchatn@tik.tn>), [Tik.tn](https://tik.tn).
