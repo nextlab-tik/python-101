@@ -30,7 +30,7 @@ print(firas)
 class Employee(Person):
 
     def __init__(self, nom, prenom, job):
-        # super() on python (call parent constructor)
+        # super().__init__(nom, prenom) # super() on python (call parent constructor)
         Person.__init__(self, nom, prenom)
         self.job = job
 
