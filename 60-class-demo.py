@@ -23,7 +23,17 @@ firas = Person("Firas", "Chaaben")
 
 firas.hi()
 firas.whoami()
+Person.whoami(firas)
 print(firas)
+
+
+class Personne:
+    nom = "moez"
+    prenom = "bouhlel"
+
+
+p2 = Personne()
+Person.whoami(p2)
 
 
 # Subclass
@@ -41,8 +51,31 @@ class Employee(Person):
     def __str__(self):
         return "{} - {}".format(Person.__str__(self), self.job)
 
+
 e = Employee("Firas", "Chaaben", "Etudiant")
 
 print("Created employee:", e)
 e.whoami()
 print(e.job)
+
+
+class Demo:
+    for i in range(10):
+        print(i)
+
+    counter = 0
+
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+        Demo.counter += 1
+
+    def __lt__(self, obj2):
+        return self.age < obj2.age
+
+
+d1 = Demo("demo1", 5)
+d2 = Demo("demo2", 3)
+
+print(d1 < d2)
+

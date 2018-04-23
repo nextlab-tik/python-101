@@ -22,5 +22,13 @@ def triangle(hauteur):
         print(etoiles.center(base))
 
 
+def triangle2(hauteur):
+    for i in range(1, hauteur+1):
+        print(' ' * (hauteur - i) + '*' * (i * 2 - 1))
+
+
 triangle(3)
 triangle(5)
+
+triangle2(3)
+triangle2(5)
