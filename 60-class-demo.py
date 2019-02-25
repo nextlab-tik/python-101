@@ -71,7 +71,7 @@ class Demo:
         Demo.counter += 1
 
     def __lt__(self, obj2):
-        return self.age < obj2.age
+        return self.value < obj2.value
 
 
 d1 = Demo("demo1", 5)
@@ -79,3 +79,13 @@ d2 = Demo("demo2", 3)
 
 print(d1 < d2)
 
+
+# Identity theft
+
+
+class JSON(int):
+    from json import dumps
+
+
+json = JSON(5)
+print("DUMPS:", json.dumps())
